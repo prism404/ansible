@@ -1,5 +1,5 @@
 FROM python:3.11
 
-RUN pip install ansible
+RUN apt update && apt install -y nano sshpass && pip install ansible
 
 WORKDIR /ansible

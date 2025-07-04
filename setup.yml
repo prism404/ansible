@@ -1,8 +1,10 @@
 - name: Configuration initiale de la VM
   hosts: servers
   become: yes
-  tasks:
+  vars_files:
+    - vault.yaml
 
+  tasks:
     - name: Configurer timezone
       timezone:
         name: Europe/Paris
@@ -21,3 +23,15 @@
           - net-tools
           - htop
         state: present
+
+    - name: Créer un utilisateur spécifique
+      user:
+        name: "{{ new_user }}"
+        state: present
+        groups: sudo
+        create_home: yes
+
+    - name: Ajouter une clé SSH pour le nouvel utilisateur
+      authorized_key:
+        user: "{{ new_user }}"
+        key: "{{ lookup('file', 'id_rsa.pub') }}"

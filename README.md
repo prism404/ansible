@@ -51,5 +51,8 @@ ansible -i inventory.ini servers -m ping --ask-pass
 
 Résultat attendu : un pong
 
-
+Générer une clé publique 
+```bash
+ssh-keygen -t rsa -b 4096
+```
 
