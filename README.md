@@ -56,3 +56,19 @@ Générer une clé publique
 ssh-keygen -t rsa -b 4096
 ```
 
+Chiffrer mon vault
+
+```bash
+ansible-vault encrypt vault.yaml
+```
+
+Lancer le playbook
+
+```bash
+ansible-playbook -i inventory.ini setup.yml --ask-pass --ask-become-pass --ask-vault-pass
+```
+
+Tester la connexion SSH
+```bash
+ssh dangv@localhost -p 2222
+```
