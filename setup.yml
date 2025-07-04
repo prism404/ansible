@@ -1,0 +1,23 @@
+- name: Configuration initiale de la VM
+  hosts: servers
+  become: yes
+  tasks:
+
+    - name: Configurer timezone
+      timezone:
+        name: Europe/Paris
+
+    - name: Mettre à jour le système
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Installer outils essentiels
+      apt:
+        name:
+          - curl
+          - wget
+          - git
+          - net-tools
+          - htop
+        state: present

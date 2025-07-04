@@ -1,10 +1,6 @@
-# 🚀 Projet Mise en Production et Supervision avec Ansible
+# Mise en Production avec Ansible
 
-## ✅ Étape 1 – Configuration de l’environnement et de la machine cible
-
-## 📝 **1. Préparation de l’environnement Ansible**
-
-### 🔧 **1.1. Création du projet et Dockerfile**
+## Étape 1 – Configuration de l’environnement et de la machine cible
 
 ```bash
 mkdir ansible-project
@@ -23,10 +19,37 @@ Construction de l'image Docker
 docker build -t ansible-container .
 ```
 
-Lancer Docker
+Lancer un container Docker basé sur cette image
+
 ```bash
 docker run -it --rm -v ${PWD}:/ansible ansible-container bash
 ```
+Connexion à la VM - IP : 10.0.2.15
 
-VM IP : 10.0.2.15
+```bash
+ssh dangv@localhost -p 2222
+```
+
+Création de l'inventaire Ansible
+
+```bash
+nano inventory.ini
+```
+
+Ici, host.docker.internal permet au container Docker d’accéder au PC hôte qui redirige ensuite vers la VM Debian via le port 2222
+
+```bash
+[servers]
+vm1 ansible_host=host.docker.internal ansible_port=2222 ansible_user=ton_utilisateur
+```
+
+Tests de connexion
+
+```bash
+ansible -i inventory.ini servers -m ping --ask-pass
+```
+
+Résultat attendu : un pong
+
+
 
